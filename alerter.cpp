@@ -45,13 +45,13 @@ private:
 int main() {
     Alerter* Alarm = new Stub1;
     Alerter* Alarm2 = new CorrectedStub;
-    for(int Temperature = 0; Temperature < 1400; Temperature+=100)
+    for(int Temperature = 0; Temperature < 1400; Temperature+=100){
         Alarm->alertInCelcius(Temperature);
-    std::cout << Alarm->alertFailureCount << " alerts failed.\n";
-    assert(Alarm->alertFailureCount > 0);
-    for(int Temperature = 0; Temperature < 1400; Temperature+=100)
         Alarm2->alertInCelcius(Temperature);
+    }
+    std::cout << Alarm ->alertFailureCount << " alerts failed.\n";
     std::cout << Alarm2->alertFailureCount << " alerts failed.\n";
+    assert(Alarm ->alertFailureCount > 0);
     assert(Alarm2->alertFailureCount > 0);
     std::cout << "All is well (maybe!)\n";
     return 0;
