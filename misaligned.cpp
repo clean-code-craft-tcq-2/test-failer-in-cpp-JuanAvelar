@@ -100,6 +100,6 @@ int main() {
     std::stringstream result = printColorMap();
     Testing::TestLineContents   (&result, 14 );
     Testing::TestOutputAlignment(&result, '|');
-    std::cout << "\nAll is well (maybe!)\n";
+    std::cout << "\n\n\tTesting::All is well (maybe!)\n\n";
     return 0;
 }

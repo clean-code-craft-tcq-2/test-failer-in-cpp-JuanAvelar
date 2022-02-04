@@ -64,10 +64,10 @@ int main() {
         Alarm2->alertInCelcius(Temperature);
         TotalAlerts++;
     }
-    std::cout << Alarm ->alertFailureCount << "/" << TotalAlerts << " alerts failed.\n";
-    std::cout << Alarm2->alertFailureCount << "/" << TotalAlerts << " alerts failed.\n";
+    std::cout << "\n\tTesting::(" << Alarm ->alertFailureCount << "/" << TotalAlerts << ")alerts from ALERT1 failed.\n";
+    std::cout << "\tTesting::(" << Alarm2->alertFailureCount << "/" << TotalAlerts << ")alerts from ALERT2 failed.\n";
     assert(Alarm ->alertFailureCount == CalculateFailures(TotalAlerts, CORRECTTHRESHOLD2, MaxTestTemp));
     assert(Alarm2->alertFailureCount == CalculateFailures(TotalAlerts, CORRECTTHRESHOLD , MaxTestTemp));
-    std::cout << "All is well (maybe!)\n";
+    std::cout << "\n\n\tTesting::All is well (maybe!)\n\n";
     return 0;
 }
