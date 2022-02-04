@@ -30,7 +30,7 @@ public:
 class Stub1Corrected: public Alerter{
 private:
     int networkAlertStub(float celcius) override {
-        std::cout << "ALERT: Temperature is " << celcius << " celcius.\n";
+        std::cout << "ALERT1: Temperature is " << celcius << " celcius.\n";
         // Return 200 for ok
         // Return 500 for not-ok
         // stub always succeeds and returns 200
@@ -40,7 +40,7 @@ private:
 class CorrectedStub: public Alerter{
 private:
     int networkAlertStub(float celcius) override {
-        std::cout << "ALERT: Temperature is " << celcius << " celcius.\n";
+        std::cout << "ALERT2: Temperature is " << celcius << " celcius.\n";
         // Return 200 for ok
         // Return 500 for not-ok
         // stub always succeeds and returns 200
@@ -48,12 +48,17 @@ private:
     }
 };
 
+size_t CalculateFailures(size_t TotalAlerts, float Threshold, float MaxTemp){
+    return std::floor(TotalAlerts * (1 - (Threshold*9/5+32) / MaxTemp));
+}
+
 int main() {
-    size_t TotalAlerts = 0;
-    const float MaxTestTemp = 1400.00;
+    //For more complex implementation use smart pointers
     Alerter* Alarm  = new Stub1Corrected;
     Alerter* Alarm2 = new CorrectedStub;
     //Design the test to go from 0°f to 1400°f with 100° increments
+    size_t TotalAlerts = 0;
+    const float MaxTestTemp = 1400.00;
     for(float Temperature = 0; Temperature < MaxTestTemp; Temperature+=100){
         Alarm ->alertInCelcius(Temperature);
         Alarm2->alertInCelcius(Temperature);
@@ -61,8 +66,8 @@ int main() {
     }
     std::cout << Alarm ->alertFailureCount << "/" << TotalAlerts << " alerts failed.\n";
     std::cout << Alarm2->alertFailureCount << "/" << TotalAlerts << " alerts failed.\n";
-    assert(Alarm ->alertFailureCount == std::floor(TotalAlerts * (1 - (CORRECTTHRESHOLD2*9/5+32) / MaxTestTemp)));
-    assert(Alarm2->alertFailureCount == std::floor(TotalAlerts * (1 - (CORRECTTHRESHOLD *9/5+32) / MaxTestTemp)));
+    assert(Alarm ->alertFailureCount == CalculateFailures(TotalAlerts, CORRECTTHRESHOLD2, MaxTestTemp));
+    assert(Alarm2->alertFailureCount == CalculateFailures(TotalAlerts, CORRECTTHRESHOLD , MaxTestTemp));
     std::cout << "All is well (maybe!)\n";
     return 0;
 }
