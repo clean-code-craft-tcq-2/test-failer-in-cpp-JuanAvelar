@@ -27,8 +27,8 @@ std::stringstream printColorMap() {
 std::array<std::string,2> PairNumber2Color(int Pair){
   std::array<std::string,2> Colors;
   if(Pair > 0 && Pair < numberOfMajorColors*numberOfMinorColors){
-    Colors[0] = std::string(majorColor[(Pair-1)/numberOfMajorColors]);
-    Colors[1] = std::string(minorColor[(Pair-1)%numberOfMinorColors]);
+    Colors[MAJOR] = std::string(majorColor[(Pair-1)/numberOfMajorColors]);
+    Colors[MINOR] = std::string(minorColor[(Pair-1)%numberOfMinorColors]);
   }
   return Colors;
 }
@@ -63,8 +63,8 @@ void TestLineContents(std::stringstream* ColorMapText, int LinePrintedNumber){
   std::array<std::string, 2> colors = PairNumber2Color(LinePrintedNumber);
   std::cout << "Major:" << MajorWord << ", Expected:" << colors.at(MAJOR) << '\n';
   std::cout << "Major:" << MinorWord << ", Expected:" << colors.at(MINOR) << '\n';
-  assert(MajorWord == colors.at(0));
-  assert(MinorWord == colors.at(1));
+  assert(MajorWord == colors.at(MAJOR));
+  assert(MinorWord == colors.at(MINOR));
 }
 
 void TestOutputAlignment(std::stringstream* ColorMapText, char separator){
@@ -88,7 +88,7 @@ void TestOutputAlignment(std::stringstream* ColorMapText, char separator){
 
 int main() {
     std::stringstream result = printColorMap();
-    // TestLineContents(&result, 14);
+    TestLineContents(&result, 14);
     TestOutputAlignment(&result, '|');
     std::cout << "All is not well (maybe!)\n";
     return 0;
